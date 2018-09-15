@@ -7,7 +7,7 @@ module.exports = {
       connection: {
           database: 'educationC',
           user:     'root',
-          password: '1234',
+          password: 'password',
           charset: 'utf8'
       },
       pool: {
