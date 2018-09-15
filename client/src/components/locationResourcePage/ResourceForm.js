@@ -34,7 +34,6 @@ class ResourceForm extends Component {
             this.props.fetchLocationResource(match.params.id);
         }
         const {user} = this.props.userLogin;
-        console.log("userId", user);
         //获取购买者的余额
         this.props.fetchBalance(user.id);
         //获取资源所有者的余额
