@@ -22,7 +22,7 @@ class MyNetwork {
            console.log(evt);
         });
     }
-    
+
 }
 
 export default MyNetwork;

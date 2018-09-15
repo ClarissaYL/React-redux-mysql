@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import classnames from "classnames";
 import {connect} from 'react-redux';
-import {userRecharge} from '../../actions/rechargeAction';
+import {userRecharge,rechargeBlockchain} from '../../actions/rechargeAction';
 import {Redirect} from "react-router-dom";
 
 class RechargeForm extends Component {
     state = {
+        $class: "org.demo.network.RechargeTransaction",
+        website: 'A',  //获取网站名(未解决，如何获取站名)
         id: '',
         username: '',
         balance: '',
@@ -16,9 +18,9 @@ class RechargeForm extends Component {
 
     componentDidMount() {
         const {user} = this.props.userLogin;
-        console.log(user);
-        console.log("userId", user.id);
-        console.log(this.props.user.balance);
+        // console.log(user);
+        // console.log("userId", user.id);
+        // console.log(this.props.user.balance);
     }
 
     handleChange = (e) => {
@@ -46,12 +48,9 @@ class RechargeForm extends Component {
 
         if (isValid) {
             const {username, balance} = this.state;
-            console.log(this.state);
             const restBalance = this.props.user.balance;
-            console.log(restBalance, balance);
             const recharge = balance >> 0;
             const totalBalance  = restBalance + recharge;
-            console.log(username, totalBalance);
 
             this.setState({loading: true});
 
@@ -66,6 +65,16 @@ class RechargeForm extends Component {
                     this.setState({errors, loading: false})
                 })
             )
+
+            //recharge on blockchain
+            const {$class, website} = this.state;
+            const rechargeToken = recharge;
+            const userId = website + '-' + username;
+            const customer = "resource:org.demo.network.Customer#" + userId;
+            console.log(userId,rechargeToken);
+            this.props.rechargeBlockchain({
+                $class,customer,rechargeToken
+            })
         }
 
     };
@@ -137,4 +146,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {userRecharge})(RechargeForm);
+export default connect(mapStateToProps, {userRecharge,rechargeBlockchain})(RechargeForm);
