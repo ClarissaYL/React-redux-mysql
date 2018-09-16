@@ -66,6 +66,19 @@ export const saveResource = (resourceData) => {
     }
 };
 
+
+export const saveResourceToMysql = (data) => {
+    return dispatch => {
+        return fetch('/api/myResources', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })//.then(resource => console.log("TEST::",resource))    TODO：提取资源ID
+    }
+};
+
 export const uploadRequest = (file) => {
     return dispatch => {
         return fetch('/api/allUpload', {

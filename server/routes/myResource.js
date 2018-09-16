@@ -33,8 +33,7 @@ router.get('/:userId', (req, res) => {
 router.post('/', (req, res) => {
     const {errors, isValid} = validate(req.body);
     if (isValid) {
-        const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
-        console.log(req.body);
+        const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice,allWeb} = req.body;
 
         return File.forge({
             userId: userId,
@@ -42,7 +41,9 @@ router.post('/', (req, res) => {
             fileImage: fileImage,
             fileDescription: fileDescription,
             fileReadPrice: fileReadPrice,
-            fileRightPrice: fileRightPrice
+            fileRightPrice: fileRightPrice,
+            allWeb:allWeb,
+            readCount:0
         }, {hasTimestamps: true}).save()
             .then(resource => res.json({resource: resource}))
             .catch(err => res.status(500).json({errors: {global: "something went wrong!"}}));
